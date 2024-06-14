@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.lim.demos</groupId>
+        <artifactId>bigdata-demos</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>kingbase-demo</artifactId>
+
+    <properties>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <kingbase8.version>8.6.0</kingbase8.version>
+        <poi-ooxml.version>4.1.2</poi-ooxml.version>
+    </properties>
+
+    <dependencies>
+
+        <!--    工具包    -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <!-- 人大金仓jdbc驱动jar -->
+        <dependency>
+            <groupId>cn.com.kingbase</groupId>
+            <artifactId>kingbase8</artifactId>
+            <version>${kingbase8.version}</version>
+        </dependency>
+
+        <!-- poi数据导出 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi-ooxml.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

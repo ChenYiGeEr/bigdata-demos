@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.lim.demos</groupId>
+    <artifactId>bigdata-demos</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>flink-demo</module>
+        <module>flume-demo</module>
+        <module>hbase-demo</module>
+        <module>hdfs-demo</module>
+        <module>hive-demo</module>
+        <module>kafka-demo</module>
+        <module>kingbase-demo</module>
+        <module>mapreduce-demo</module>
+    <!-- <module>scala-demo</module> -->
+        <module>spark-demo</module>
+    </modules>
+
+    <properties>
+        <revision>1.0-SNAPSHOT</revision>
+        <scala.binary.version>2.12</scala.binary.version>
+
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- lombok、slf4j -->
+        <lombok.version>1.18.16</lombok.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <junit.version>4.13.1</junit.version>
+        <log4j-slf4j-impl.version>2.17.1</log4j-slf4j-impl.version>
+
+        <!-- 大数据组件版本 -->
+        <hadoop-client.version>3.3.0</hadoop-client.version>
+        <flink.version>1.13.1</flink.version>
+        <flink-connector-kafka.version>1.13.1</flink-connector-kafka.version>
+
+    </properties>
+
+    <!--  父依赖  -->
+    <dependencies>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JUNIT单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j-slf4j-impl.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,7 @@
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/c_demo.dir
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/01_Hello.dir
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/main.dir
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/02_CommentDest.dir
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/04_Print.dir
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/lim/代码/mine/c-demo/cmake-build-debug/CMakeFiles/rebuild_cache.dir

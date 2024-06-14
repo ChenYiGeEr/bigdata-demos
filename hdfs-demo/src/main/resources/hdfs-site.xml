@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+    <property>
+        <name>dfs.replication</name>
+        <value>4</value>
+    </property>
+
+    <property>
+        <name>hadoop.http.staticuser.user</name>
+        <value>parallels</value>
+    </property>
+
+</configuration>
