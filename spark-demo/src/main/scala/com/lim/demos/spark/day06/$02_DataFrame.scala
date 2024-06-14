@@ -1,6 +1,5 @@
 package com.lim.demos.spark.day06
 
-import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 

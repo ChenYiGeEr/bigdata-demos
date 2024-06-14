@@ -1,7 +1,9 @@
 package com.lim.demos.kafka.producer;
 
 import com.lim.demos.kafka.producer.partitioner.CustomerPartitioner;
-import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.KafkaException;
 import org.apache.kafka.common.serialization.StringSerializer;
 

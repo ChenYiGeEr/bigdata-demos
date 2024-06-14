@@ -2,14 +2,7 @@ package com.lim.demos.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-/* RangeAssignor分区 */
-import org.apache.kafka.clients.consumer.RangeAssignor;
-/* RoundRobinAssignor分区 */
-import org.apache.kafka.clients.consumer.RoundRobinAssignor;
-/* StickyAssignor分区 */
 import org.apache.kafka.clients.consumer.StickyAssignor;
-/* CooperativeStickyAssignor分区 */
-import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
