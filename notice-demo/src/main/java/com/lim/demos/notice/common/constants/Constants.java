@@ -59,6 +59,11 @@ public class Constants {
     public static final String BIRTHDAY_NOTICE_WECHAT_ENABLE = "birthday.notice.wechat.enable";
 
     /**
+     * birthday.notice.serverchan.enable
+     */
+    public static final String BIRTHDAY_NOTICE_SERVER_CHAN_ENABLE = "birthday.notice.serverchan.enable";
+
+    /**
      * birthday.countdown
      */
     public static final String BIRTHDAY_COUNTDOWN_DAYS  = "birthday.countdown";

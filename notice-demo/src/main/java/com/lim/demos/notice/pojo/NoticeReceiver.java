@@ -32,6 +32,9 @@ public class NoticeReceiver implements Serializable {
     /** TODO 人员微信uid，多个微信uid使用英文逗号隔开 */
     private String wechatUid;
 
+    /** 人员server酱sendKey，多个邮箱地址使用英文逗号隔开 */
+    private String serverChanSendKey;
+
     public String getName() {
         return name;
     }
@@ -72,11 +75,20 @@ public class NoticeReceiver implements Serializable {
         this.wechatUid = wechatUid;
     }
 
-    public NoticeReceiver(String name, String phoneNumber, String emailAddress, String wechatUid) {
+    public String getServerChanSendKey() {
+        return serverChanSendKey;
+    }
+
+    public void setServerChanSendKey(String serverChanSendKey) {
+        this.serverChanSendKey = serverChanSendKey;
+    }
+
+    public NoticeReceiver(String name, String phoneNumber, String emailAddress, String wechatUid, String serverChanSendKey) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.wechatUid = wechatUid;
+        this.serverChanSendKey = serverChanSendKey;
     }
 
     @Override
@@ -87,6 +99,7 @@ public class NoticeReceiver implements Serializable {
                 .append("phoneNumber", getPhoneNumber())
                 .append("emailAddress", getEmailAddress())
                 .append("wechatUid", getWechatUid())
+                .append("serverChanSendKey", getServerChanSendKey())
                 .toString();
     }
 }

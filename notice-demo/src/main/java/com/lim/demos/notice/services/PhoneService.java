@@ -8,7 +8,7 @@ package com.lim.demos.notice.services;
  * @version 1.0
  * @since 2024/6/19 上午10:47
  */
-public interface PhoneService {
+public interface PhoneService extends NoticeBaseService {
 
 
 }

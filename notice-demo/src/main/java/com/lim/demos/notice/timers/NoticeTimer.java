@@ -7,6 +7,7 @@ import com.lim.demos.notice.common.utils.PropertyUtils;
 import com.lim.demos.notice.pojo.NoticeReceiver;
 import com.lim.demos.notice.pojo.People;
 import com.lim.demos.notice.services.EmailService;
+import com.lim.demos.notice.services.ServerChanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,10 @@ public class NoticeTimer {
     @Resource
     private EmailService emailService;
 
+    @Resource
+    private ServerChanService serverChanService;
+
+    // @Scheduled(cron = "0/10 * * * * ?")
     /**
      * 方法：birthdayNotice
      * <p>每天早上七点半执行进行生日提醒（给消息接收人发送生日提醒）</p>
@@ -93,7 +98,7 @@ public class NoticeTimer {
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_EMAIL_ENABLE, Boolean.FALSE)) {
             logger.info("邮箱提醒......");
             receivers.stream().filter(receiver -> !StringUtils.isEmpty(receiver.getEmailAddress())).forEach(receiver -> {
-                emailService.sendBirthdayNoticeEmail(receiver, birthTargetPeoples);
+                emailService.sendBirthdayNotice(receiver, birthTargetPeoples);
             });
         }
 
@@ -101,6 +106,15 @@ public class NoticeTimer {
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_WECHAT_ENABLE, Boolean.FALSE)) {
             logger.info("微信提醒......");
         }
+
+        // 6.4 server酱
+        if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_SERVER_CHAN_ENABLE, Boolean.FALSE)) {
+            logger.info("Server酱提醒......");
+            receivers.stream().filter(receiver -> !StringUtils.isEmpty(receiver.getServerChanSendKey())).forEach(receiver -> {
+                serverChanService.sendBirthdayNotice(receiver, birthTargetPeoples);
+            });
+        }
+
         logger.info("{}_NoticeTimer.birthdayNotice 生日提醒 end >>>", dateFormat);
     }
 

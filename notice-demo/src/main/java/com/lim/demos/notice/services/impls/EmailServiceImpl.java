@@ -8,7 +8,6 @@ import com.lim.demos.notice.services.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender emailSender;
 
     /**
-     * 方法：sendBirthdayNoticeEmail
+     * 方法：sendBirthdayNotice
      * <p>给receiver发送生日提醒的短信 </p>
      *
      * @param receiver 接收人信息
@@ -48,7 +47,7 @@ public class EmailServiceImpl implements EmailService {
      * @author lim
      */
     @Override
-    public void sendBirthdayNoticeEmail(NoticeReceiver receiver, List<People> peoples) {
+    public void sendBirthdayNotice(NoticeReceiver receiver, List<People> peoples) {
         try {
             this.sendMimeEmail(
                     receiver.getEmailAddress(),
@@ -56,29 +55,9 @@ public class EmailServiceImpl implements EmailService {
                     getBirthdayEmailHtmlContentByPeoples(receiver, peoples)
             );
         } catch (MessagingException e) {
-            log.error("sendBirthdayNoticeEmail ERROR");
+            log.error("sendBirthdayNotice ERROR");
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * 方法：sendSimpleEmail
-     * <p>发送简单的文本邮件(不支持附件、HTML 内容或嵌入资源)</p>
-     *
-     * @param toEmailAddress 接收人邮箱地址
-     * @param subject 邮件主题
-     * @param textContent 邮件文本内容
-     * @since 2024/6/19 上午9:36
-     * @author lim
-     */
-    private void sendSimpleEmail(String toEmailAddress, String subject, String textContent) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        // from = 发件人邮箱 to = 收件人邮箱 subject = 邮件主题 text = 邮件文本内容
-        message.setFrom(senderEmailAddress);
-        message.setTo(toEmailAddress);
-        message.setSubject(subject);
-        message.setText(textContent);
-        emailSender.send(message);
     }
 
     /**
