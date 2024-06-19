@@ -13,19 +13,11 @@
     <artifactId>kingbase-demo</artifactId>
 
     <properties>
-        <commons-lang3.version>3.3.2</commons-lang3.version>
         <kingbase8.version>8.6.0</kingbase8.version>
         <poi-ooxml.version>4.1.2</poi-ooxml.version>
     </properties>
 
     <dependencies>
-
-        <!--    工具包    -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
 
         <!-- 人大金仓jdbc驱动jar -->
         <dependency>
