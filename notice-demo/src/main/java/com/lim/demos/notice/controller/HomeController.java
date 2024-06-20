@@ -24,7 +24,7 @@ public class HomeController {
      * 方法：home
      * <p>默认页 </p>
      *
-     * @return com.unicom.ibdp.model.ReturnDataModel
+     * @return java.util.Map
      * @since 2023/11/21 10:11
      * @author lim
      */

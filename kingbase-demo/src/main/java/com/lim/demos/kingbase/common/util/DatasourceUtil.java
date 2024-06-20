@@ -147,7 +147,7 @@ public class DatasourceUtil {
      *
      * @param connection 人大金仓连接
      * @param sql 需要执行的sql
-     * @return java.util.List<com.unicom.kingbase.common.entity.TableColumnMateData>
+     * @return java.util.List<com.lim.demos.kingbase.common.entity.TableColumnMateData>
      * @since 2024/5/31 上午11:11
      * @author lim
      */
