@@ -56,8 +56,7 @@ public class NoticeTimer {
      * @since 2024/6/18 上午10:25
      * @author lim
      */
-    @Scheduled(cron = "0/10 * * * * ?")
-    // @Scheduled(cron = "0 30 7 * * ?")
+    @Scheduled(cron = "0 30 7 * * ?")
     public void birthdayNoticeSchedule() {
         // 0. 若用户在配置文件中关闭了生日提醒或者配置文件中无生日类型则不执行方法体
         if (!PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_ENABLE, Boolean.FALSE)) {

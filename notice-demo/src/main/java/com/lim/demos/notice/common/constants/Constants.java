@@ -69,21 +69,6 @@ public class Constants {
     public static final String BIRTHDAY_NOTICE_FEISHU_SECRET = "birthday.notice.feishu.secret";
 
     /**
-     * birthday.notice.wechat.enterprise.enable
-     */
-    public static final String BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_ENABLE = "birthday.notice.wechat.enterprise.enable";
-
-    /**
-     * birthday.notice.wechat.enterprise.corpId
-     */
-    public static final String BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_CORP_ID = "birthday.notice.wechat.enterprise.corpId";
-
-    /**
-     * birthday.notice.wechat.enterprise.corpSecret
-     */
-    public static final String BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_CORP_SECRET = "birthday.notice.wechat.enterprise.corpSecret";
-
-    /**
      * birthday.notice.serverchan.enable
      */
     public static final String BIRTHDAY_NOTICE_SERVER_CHAN_ENABLE = "birthday.notice.serverchan.enable";
