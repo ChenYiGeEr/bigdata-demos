@@ -6,7 +6,10 @@ import com.lim.demos.notice.common.utils.JsonUtil;
 import com.lim.demos.notice.common.utils.PropertyUtils;
 import com.lim.demos.notice.pojo.NoticeReceiver;
 import com.lim.demos.notice.pojo.People;
-import com.lim.demos.notice.services.*;
+import com.lim.demos.notice.services.EmailService;
+import com.lim.demos.notice.services.FeiShuService;
+import com.lim.demos.notice.services.PhoneService;
+import com.lim.demos.notice.services.ServerChanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,9 +38,6 @@ public class NoticeTimer {
 
     @Resource
     private EmailService emailService;
-
-    @Resource
-    private EnterpriseWechatService enterpriseWechatService;
 
     @Resource
     private FeiShuService feiShuService;
@@ -120,15 +120,7 @@ public class NoticeTimer {
             });
         }
 
-        // TODO 企业微信提醒
-        if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_ENABLE, Boolean.FALSE)) {
-            log.info("微信提醒......");
-            receivers.stream().filter(receiver -> !StringUtils.isEmpty(receiver.getWechatUid())).forEach(receiver -> {
-                enterpriseWechatService.sendBirthdayNotice(receiver, birthTargetPeoples);
-            });
-        }
-
-        // 飞书机器人提醒
+        // DONE 飞书机器人提醒
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_FEISHU_ENABLE, Boolean.FALSE)) {
             log.info("飞书提醒......");
             feiShuService.sendBirthdayNotice(null, birthTargetPeoples);
@@ -142,7 +134,7 @@ public class NoticeTimer {
             });
         }
 
-        // server酱
+        // DONE server酱提醒
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_SERVER_CHAN_ENABLE, Boolean.FALSE)) {
             log.info("Server酱提醒......");
             receivers.stream().filter(receiver -> !StringUtils.isEmpty(receiver.getServerChanSendKey())).forEach(receiver -> {
