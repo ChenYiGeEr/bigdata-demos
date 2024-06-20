@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendBirthdayNotice(NoticeReceiver receiver, List<People> peoples) {
         try {
-            this.sendMimeEmail(
+            this.sendMimeEmailMsg(
                     receiver.getEmailAddress(),
                     BirthdayConstants.EMAIL_NOTICE_SUBJECT,
                     getBirthdayEmailHtmlContentByPeoples(receiver, peoples)
@@ -61,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     /**
-     * 方法：sendMimeEmail
+     * 方法：sendMimeEmailMsg
      * <p>发送复杂的 MIME 邮件，可以包含 HTML 内容、附件和嵌入资源 </p>
      *
      * @param toEmailAddress 接收人邮箱地址
@@ -70,7 +70,7 @@ public class EmailServiceImpl implements EmailService {
      * @since 2024/6/19 上午9:41
      * @author lim
      */
-    private void sendMimeEmail(String toEmailAddress, String subject, String htmlContent) throws MessagingException {
+    private void sendMimeEmailMsg(String toEmailAddress, String subject, String htmlContent) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 

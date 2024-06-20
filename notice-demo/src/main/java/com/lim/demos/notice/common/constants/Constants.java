@@ -11,7 +11,7 @@ package com.lim.demos.notice.common.constants;
 public class Constants {
 
     private Constants() {
-        throw new UnsupportedOperationException("Construct Constants");
+        throw new UnsupportedOperationException("Can't Construct Constants");
     }
 
     /**
@@ -54,9 +54,34 @@ public class Constants {
     public static final String BIRTHDAY_NOTICE_EMAIL_ENABLE = "birthday.notice.email.enable";
 
     /**
-     * birthday.notice.wechat.enable
+     * birthday.notice.feishu.enable
      */
-    public static final String BIRTHDAY_NOTICE_WECHAT_ENABLE = "birthday.notice.wechat.enable";
+    public static final String BIRTHDAY_NOTICE_FEISHU_ENABLE = "birthday.notice.feishu.enable";
+
+    /**
+     * birthday.notice.feishu.webhook
+     */
+    public static final String BIRTHDAY_NOTICE_FEISHU_WEBHOOK = "birthday.notice.feishu.webhook";
+
+    /**
+     * birthday.notice.feishu.secret
+     */
+    public static final String BIRTHDAY_NOTICE_FEISHU_SECRET = "birthday.notice.feishu.secret";
+
+    /**
+     * birthday.notice.wechat.enterprise.enable
+     */
+    public static final String BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_ENABLE = "birthday.notice.wechat.enterprise.enable";
+
+    /**
+     * birthday.notice.wechat.enterprise.corpId
+     */
+    public static final String BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_CORP_ID = "birthday.notice.wechat.enterprise.corpId";
+
+    /**
+     * birthday.notice.wechat.enterprise.corpSecret
+     */
+    public static final String BIRTHDAY_NOTICE_WECHAT_ENTERPRISE_CORP_SECRET = "birthday.notice.wechat.enterprise.corpSecret";
 
     /**
      * birthday.notice.serverchan.enable

@@ -5,16 +5,13 @@ import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson2.JSON;
 import com.lim.demos.notice.common.constants.BirthdayConstants;
 import com.lim.demos.notice.common.constants.NumberConstants;
-import com.lim.demos.notice.common.utils.DateUtil;
 import com.lim.demos.notice.pojo.NoticeReceiver;
 import com.lim.demos.notice.pojo.People;
 import com.lim.demos.notice.pojo.message.ServerChanMessage;
 import com.lim.demos.notice.services.ServerChanService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,19 +41,19 @@ public class ServerChanServiceImpl implements ServerChanService {
     @Override
     public void sendBirthdayNotice(NoticeReceiver receiver, List<People> peoples) {
         try {
-            this.sendMarkdownMessage(
+            this.sendMarkdownMsg(
                     receiver.getServerChanSendKey(),
                     BirthdayConstants.EMAIL_NOTICE_SUBJECT,
-                    getBirthdayEmailMarkdownContentByPeoples(receiver, peoples)
+                    getBirthdayMarkdownContentByPeoples(receiver, peoples)
             );
         } catch (Exception e) {
-            log.error("sendBirthdayNoticeEmail ERROR");
+            log.error("sendBirthdayNotice ERROR");
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * 方法：sendMimeEmail
+     * 方法：sendMarkdownMsg
      * <p>发送markdown消息 </p>
      *
      * @param serverChanSendKey 接收人key
@@ -65,7 +62,7 @@ public class ServerChanServiceImpl implements ServerChanService {
      * @since 2024/6/19 上午9:41
      * @author lim
      */
-    private void sendMarkdownMessage(String serverChanSendKey, String title, String markdownContent) {
+    private void sendMarkdownMsg(String serverChanSendKey, String title, String markdownContent) {
         ServerChanMessage message = new ServerChanMessage() {{
                 setTitle(title);
                 setDesp(markdownContent);
@@ -82,56 +79,6 @@ public class ServerChanServiceImpl implements ServerChanService {
         if (Objects.isNull(response) || response.getStatus() != NumberConstants.TWO_HUNDRED_INT) {
             throw new RuntimeException(response.toString());
         }
-    }
-
-    /**
-     * 方法：getBirthdayEmailMarkdownContentByPeoples
-     * <p>获取生日提醒消息内容 </p>
-     *
-     * @param receiver 邮件接收人
-     * @param peoples 过生日的人员信息
-     * @return java.lang.String 生日提醒邮件内容
-     * @since 2024/6/19 上午9:32
-     * @author lim
-     */
-    private String getBirthdayEmailMarkdownContentByPeoples(NoticeReceiver receiver, List<People> peoples) {
-        Date currentDate = new Date();
-        StringBuilder peopleBirthdayMarkdown = new StringBuilder(StringUtils.EMPTY);
-        peopleBirthdayMarkdown.append("### 【生日提醒】: 近期有人要过生日啦!\n")
-                .append("亲爱的").append(receiver.getName()).append(receiver.getGender().getAppellation()).append(",\n")
-                .append("这是一个温馨的生日提醒，表示近期有人要过生日啦。\n");
-        People people;
-        for (int i = 0; i < peoples.size(); i++) {
-            people = peoples.get(i);
-            peopleBirthdayMarkdown.append("- ")
-                    .append(people.getName())
-                    .append(people.getGender().getAppellation());
-            // 农历生日
-            if (Objects.nonNull(people.getLunarBirthday())) {
-                peopleBirthdayMarkdown.append(" 农历生日是")
-                        .append(DateUtil.CHINESE_DATE_FORMAT.format(people.getLunarBirthday()))
-                        .append("，距今还有 **")
-                        .append(DateUtil.calculateDaysDifference(currentDate, people.getLunarBirthday()))
-                        .append("** 天");
-            }
-            // 公历生日
-            if (Objects.nonNull(people.getSolarBirthday())) {
-                peopleBirthdayMarkdown.append(" 公历生日是")
-                        .append(DateUtil.CHINESE_DATE_FORMAT.format(people.getSolarBirthday()))
-                        .append("，距今还有 **")
-                        .append(DateUtil.calculateDaysDifference(currentDate, people.getSolarBirthday()))
-                        .append("** 天");
-            }
-            if (i == peoples.size() - 1) {
-                peopleBirthdayMarkdown.append("。\n\n");
-            } else {
-                peopleBirthdayMarkdown.append("；\n");
-            }
-        }
-        peopleBirthdayMarkdown.append("让我们一起计划一些特别的活动，共同庆祝这些美好的日子。\n\n")
-                .append("Best wishes, 您的生日提醒小助手\n\n")
-                .append(DateUtil.CHINESE_DATE_FORMAT.format(currentDate));
-        return peopleBirthdayMarkdown.toString();
     }
 
 }

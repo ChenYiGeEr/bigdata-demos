@@ -51,6 +51,15 @@ public class PropertyUtils {
         return Objects.isNull(val) ? defaultVal : val;
     }
 
+    public static Integer getInteger(String key) {
+        return PROPERTY_DELEGATE.getInt(key.trim());
+    }
+
+    public static Integer getInteger(String key, Integer defaultVal) {
+        Integer val = PROPERTY_DELEGATE.getInt(key.trim());
+        return Objects.isNull(val) ? defaultVal : val;
+    }
+
     public static Boolean getBoolean(String key) {
         return PROPERTY_DELEGATE.getBoolean(key);
     }

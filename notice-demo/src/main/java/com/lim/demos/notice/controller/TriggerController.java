@@ -34,7 +34,7 @@ public class TriggerController {
      */
     @RequestMapping("/birthday")
     public Map<String, Object> birthdayTrigger() {
-        noticeTimer.birthdayNotice();
+        noticeTimer.birthdayNoticeSchedule();
         return new HashMap<String, Object>(NumberConstants.TWO_INT) {{
                 put("code", NumberConstants.TWO_HUNDRED_INT);
                 put("msg", "成功");
