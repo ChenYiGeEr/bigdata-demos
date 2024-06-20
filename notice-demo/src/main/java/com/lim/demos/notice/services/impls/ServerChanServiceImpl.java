@@ -123,15 +123,14 @@ public class ServerChanServiceImpl implements ServerChanService {
                         .append("** 天");
             }
             if (i == peoples.size() - 1) {
-                peopleBirthdayMarkdown.append("。\n");
+                peopleBirthdayMarkdown.append("。\n\n");
             } else {
                 peopleBirthdayMarkdown.append("；\n");
             }
         }
-        peopleBirthdayMarkdown.append("让我们一起计划一些特别的活动，共同庆祝这些美好的日子。\n")
-                .append("Best wishes, 您的生日提醒小助手\n")
-                .append(DateUtil.CHINESE_DATE_FORMAT.format(currentDate))
-                .append("\n");
+        peopleBirthdayMarkdown.append("让我们一起计划一些特别的活动，共同庆祝这些美好的日子。\n\n")
+                .append("Best wishes, 您的生日提醒小助手\n\n")
+                .append(DateUtil.CHINESE_DATE_FORMAT.format(currentDate));
         return peopleBirthdayMarkdown.toString();
     }
 

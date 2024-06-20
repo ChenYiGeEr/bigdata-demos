@@ -76,7 +76,7 @@ public class NoticeTimer {
                 .collect(Collectors.toList());
         // 4. 对birthTargetPeoples集合进行非空判断，若集合为空则不进行生日提醒
         if (CollectionUtils.isEmpty(birthTargetPeoples)) {
-            logger.warn("最近{}天没有人过生日......", birthdayCountdownDays);
+            logger.info("最近{}天没有人过生日......", birthdayCountdownDays);
             logger.info("{}_NoticeTimer.birthdayNotice 生日提醒 end >>>", dateFormat);
             return;
         }
@@ -84,7 +84,7 @@ public class NoticeTimer {
         // 5. 获取提醒接收人集合信息，若没有接收人信息则不进行生日提醒
         List<NoticeReceiver> receivers = JsonUtil.parseArray(Constants.JSON_NOTICE_RECEIVERS, NoticeReceiver.class);
         if (CollectionUtils.isEmpty(receivers)) {
-            logger.error("没有接收人信息......");
+            logger.info("没有接收人信息......");
             logger.info("{}_NoticeTimer.birthdayNotice 生日提醒 end >>>", dateFormat);
             return;
         }

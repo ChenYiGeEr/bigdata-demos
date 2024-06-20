@@ -94,7 +94,7 @@ if [[ ! ${SERVER_PORT} ]]; then
 fi
 
 if [[ ! ${JAVA_OPTS} ]]; then
-    JAVA_OPTS=" -Xms256m -Xmx256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
+    JAVA_OPTS=" -Xms128m -Xmx128m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
 fi
 
 if [[ ! ${REMOTE_DEBUG_SWITCH} ]]; then
