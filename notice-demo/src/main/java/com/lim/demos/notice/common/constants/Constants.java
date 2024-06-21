@@ -54,6 +54,31 @@ public class Constants {
     public static final String BIRTHDAY_NOTICE_EMAIL_ENABLE = "birthday.notice.email.enable";
 
     /**
+     * birthday.notice.dingding.enable
+     */
+    public static final String BIRTHDAY_NOTICE_DINGDING_ENABLE = "birthday.notice.dingding.enable";
+
+    /**
+     * birthday.notice.dingding.webhook
+     */
+    public static final String BIRTHDAY_NOTICE_DINGDING_WEBHOOK = "birthday.notice.dingding.webhook";
+
+    /**
+     * birthday.notice.dingding.secret
+     */
+    public static final String BIRTHDAY_NOTICE_DINGDING_SECRET = "birthday.notice.dingding.secret";
+
+    /**
+     * birthday.notice.enterprisewechat.enable
+     */
+    public static final String BIRTHDAY_NOTICE_ENTERPRISE_WECHAT_ENABLE = "birthday.notice.enterprisewechat.enable";
+
+    /**
+     * birthday.notice.enterprisewechat.webhook
+     */
+    public static final String BIRTHDAY_NOTICE_ENTERPRISE_WECHAT_WEBHOOK = "birthday.notice.enterprisewechat.webhook";
+
+    /**
      * birthday.notice.feishu.enable
      */
     public static final String BIRTHDAY_NOTICE_FEISHU_ENABLE = "birthday.notice.feishu.enable";

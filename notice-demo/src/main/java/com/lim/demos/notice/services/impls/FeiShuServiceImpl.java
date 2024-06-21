@@ -80,8 +80,8 @@ public class FeiShuServiceImpl implements FeiShuService {
         params.put("sign", genSignature(timestamp));
         params.put("msg_type", "post");
         Map<String, Object> content = new HashMap<>(NumberConstants.ONE_INT);
-        Map<String, Map<String, Object>> post = new LinkedHashMap() {{
-                put("zh_cn", new HashMap<String, Object>() {{
+        Map<String, Map<String, Object>> post = new HashMap(NumberConstants.ONE_INT) {{
+                put("zh_cn", new HashMap<String, Object>(NumberConstants.TWO_INT) {{
                         put("title", subject);
                         put("content", Stream.of(msgContent).collect(Collectors.toList()));
                     }});
@@ -96,7 +96,7 @@ public class FeiShuServiceImpl implements FeiShuService {
                 .body(JSON.toJSONString(params));
         HttpResponse response = request.execute();
         if (Objects.isNull(response) || response.getStatus() != NumberConstants.TWO_HUNDRED_INT) {
-            throw new RuntimeException(response.toString());
+            throw new RuntimeException(response.body());
         }
     }
 

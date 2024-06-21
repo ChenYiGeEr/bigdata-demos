@@ -6,10 +6,7 @@ import com.lim.demos.notice.common.utils.JsonUtil;
 import com.lim.demos.notice.common.utils.PropertyUtils;
 import com.lim.demos.notice.pojo.NoticeReceiver;
 import com.lim.demos.notice.pojo.People;
-import com.lim.demos.notice.services.EmailService;
-import com.lim.demos.notice.services.FeiShuService;
-import com.lim.demos.notice.services.PhoneService;
-import com.lim.demos.notice.services.ServerChanService;
+import com.lim.demos.notice.services.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -37,7 +34,13 @@ import java.util.stream.Collectors;
 public class NoticeTimer {
 
     @Resource
+    private DingDingService dingDingService;
+
+    @Resource
     private EmailService emailService;
+
+    @Resource
+    private EnterpriseWechatService enterpriseWechatService;
 
     @Resource
     private FeiShuService feiShuService;
@@ -111,6 +114,12 @@ public class NoticeTimer {
      */
     private void sendBirthdayNotice(List<NoticeReceiver> receivers, List<People> birthTargetPeoples) {
 
+        // DONE 钉钉bot提醒
+        if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_DINGDING_ENABLE, Boolean.FALSE)) {
+            log.info("钉钉bot提醒......");
+            dingDingService.sendBirthdayNotice(null, birthTargetPeoples);
+        }
+
         // DONE 邮件提醒
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_EMAIL_ENABLE, Boolean.FALSE)) {
             log.info("邮箱提醒......");
@@ -119,15 +128,21 @@ public class NoticeTimer {
             });
         }
 
-        // DONE 飞书机器人提醒
+        // DONE 企业微信bot提醒
+        if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_ENTERPRISE_WECHAT_ENABLE, Boolean.FALSE)) {
+            log.info("企业微信bot提醒......");
+            enterpriseWechatService.sendBirthdayNotice(null, birthTargetPeoples);
+        }
+
+        // DONE 飞书bot提醒
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_FEISHU_ENABLE, Boolean.FALSE)) {
-            log.info("飞书提醒......");
+            log.info("飞书bot提醒......");
             feiShuService.sendBirthdayNotice(null, birthTargetPeoples);
         }
 
-        // TODO 手机短信提醒
+        // TODO 手机短信sms提醒
         if (PropertyUtils.getBoolean(Constants.BIRTHDAY_NOTICE_PHONE_ENABLE, Boolean.FALSE)) {
-            log.info("手机提醒......");
+            log.info("手机短信SMS提醒......");
             receivers.stream().filter(receiver -> !StringUtils.isEmpty(receiver.getPhoneNumber())).forEach(receiver -> {
                 phoneService.sendBirthdayNotice(receiver, birthTargetPeoples);
             });

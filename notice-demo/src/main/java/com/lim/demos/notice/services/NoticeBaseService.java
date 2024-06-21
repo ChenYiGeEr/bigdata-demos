@@ -43,9 +43,11 @@ public interface NoticeBaseService {
     default String getBirthdayMarkdownContentByPeoples(NoticeReceiver receiver, List<People> peoples) {
         Date currentDate = new Date();
         StringBuilder peopleBirthdayMarkdown = new StringBuilder(StringUtils.EMPTY);
-        peopleBirthdayMarkdown.append("### 【生日提醒】: 近期有人要过生日啦!\n")
-                .append("亲爱的").append(receiver.getName()).append(receiver.getGender().getAppellation()).append(",\n")
-                .append("这是一个温馨的生日提醒，表示近期有人要过生日啦。\n");
+        peopleBirthdayMarkdown.append("### 【生日提醒】: 近期有人要过生日啦!\n").append("亲爱的");
+        if (Objects.nonNull(receiver)) {
+            peopleBirthdayMarkdown.append(receiver.getName()).append(receiver.getGender().getAppellation());
+        }
+        peopleBirthdayMarkdown.append(",\n").append("这是一个温馨的生日提醒，表示近期有人要过生日啦。\n");
         People people;
         for (int i = 0; i < peoples.size(); i++) {
             people = peoples.get(i);
