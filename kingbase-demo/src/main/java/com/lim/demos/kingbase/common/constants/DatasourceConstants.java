@@ -1,5 +1,9 @@
 package com.lim.demos.kingbase.common.constants;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+
 /**
  * DatasourceConstants
  * <p>数据源常量</p>
@@ -9,12 +13,6 @@ package com.lim.demos.kingbase.common.constants;
  * @since 2024/5/31 上午9:19
  */
 public class DatasourceConstants {
-
-    public static final String DB_DATA_BASE = "database";
-
-    public static final String DB_TABLE_SCHEMA = "tableSchema";
-
-    public static final String DB_TABLE = "table";
 
     public static final String ENG_COMMA = ",";
 
@@ -28,32 +26,62 @@ public class DatasourceConstants {
 
     public static final String PROPERTY_JDBC_TABLE_SCHEMAS = "jdbc.tableSchemas";
 
-    /** 人大金仓url前缀 */
-    public static final String KINGBASE_URL_PREFIX = "jdbc:kingbase8://";
-
     /** 人大金仓启动类全限定名 */
     public static final String KINGBASE_DRIVER = "com.kingbase8.Driver";
 
     /** 数据库名称列 */
     public static final String COLUMN_DATABASE_NAME = "datname";
 
-    /** 人大金仓sql 获取所有的数据库名称 */
-    public static final String SQL_GET_ALL_DATABASES_NAME = String.format("select %s from sys_database order by %s", COLUMN_DATABASE_NAME, COLUMN_DATABASE_NAME);
-
     /** 数据表schema名称列 */
     public static final String COLUMN_TABLE_SCHEMA_NAME = "table_schema";
-
-    /** 人大金仓sql 获取某一数据库下的表schema名称 */
-    public static String getDatabaseTableSchemasSql(String columnName, String databaseName){
-        return String.format("select distinct %s from information_schema.tables where table_catalog='%s'", columnName, databaseName);
-    }
 
     /** 数据表名称列 */
     public static final String COLUMN_TABLE_NAME = "table_name";
 
+    /** 数据表备注列 */
+    public static final String COLUMN_TABLE_COMMENT = "table_comment";
+
+    /** 人大金仓sql 获取所有的数据库名称 */
+    public static String getAllDatabasesName (String jdbcDatabases) {
+        String whereSql = "1 = 1";
+        if (StringUtils.isNotBlank(jdbcDatabases)) {
+            whereSql = COLUMN_DATABASE_NAME + " IN ('" + String.join("','", Arrays.asList(jdbcDatabases.split(ENG_COMMA))) + "')";
+        }
+        return String.format(
+                "select %s from sys_database where %s order by %s", COLUMN_DATABASE_NAME, whereSql, COLUMN_DATABASE_NAME);
+    }
+
+    /** 人大金仓sql 获取某一数据库下的表schema名称 */
+    public static String getDatabaseTableSchemasSql(String columnName, String databaseName, String jdbcTableSchemas){
+        String sql = "select\n" +
+                "\tdistinct tbl.%s\n" +
+                "\tfrom\n" +
+                "\tinformation_schema.tables tbl\n" +
+                "\twhere\n" +
+                "\ttbl.table_catalog = '%s'";
+        if (StringUtils.isNotBlank(jdbcTableSchemas)) {
+            sql += String.format(" and tbl.%s IN ('%s')", columnName, String.join("','", Arrays.asList(jdbcTableSchemas.split(ENG_COMMA))));
+        }
+        return String.format(sql, columnName, databaseName);
+    }
+
     /** 人大金仓sql 获取某一数据库下的表名称 */
-    public static String getDatabaseTablesSql(String columnName, String databaseName, String tableSchemaName) {
-        return String.format("%s and " + COLUMN_TABLE_SCHEMA_NAME + "='%s' order by %s", getDatabaseTableSchemasSql(columnName, databaseName), tableSchemaName, columnName);
+    public static String getDatabaseTablesSql(String columnName, String databaseName, String jdbcTableSchemas, String tableSchemaName) {
+        String sql = "select\n" +
+                "\ttbl.%s,\n" +
+                "\tobj_description(c.relfilenode,'pg_class') as " + COLUMN_TABLE_COMMENT + "\n" +
+                "\tfrom\n" +
+                "\tinformation_schema.tables tbl\n" +
+                "\tleft join pg_catalog.pg_class c on c.relname = tbl.table_name\n" +
+                "\twhere\n" +
+                "\ttbl.table_catalog = '%s'\n";
+        if (StringUtils.isNotBlank(jdbcTableSchemas)) {
+            sql += String.format("\tand tbl.table_schema IN ('%s')", String.join("','", Arrays.asList(jdbcTableSchemas.split(ENG_COMMA))));
+        }
+        return String.format("%s and tbl." + COLUMN_TABLE_SCHEMA_NAME + "='%s' order by tbl.%s",
+                String.format(sql, columnName, databaseName),
+                tableSchemaName,
+                columnName);
     }
 
     /** 人大金仓sql 获取某一数据库下某一张表的名称 */

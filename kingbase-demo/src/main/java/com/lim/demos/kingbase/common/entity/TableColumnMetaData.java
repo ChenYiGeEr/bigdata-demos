@@ -6,14 +6,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
 
 /**
- * TableColumnMateData
+ * TableColumnMetaData
  * <p>表格列的元数据</p>
  *
  * @author lim
  * @version 1.0
  * @since 2024/5/31 上午11:05
  */
-public class TableColumnMateData implements Serializable {
+public class TableColumnMetaData implements Serializable {
 
     /** 列名 */
     private String columnName;
@@ -41,6 +41,9 @@ public class TableColumnMateData implements Serializable {
 
     /** 默认 */
     private String columnDefault;
+
+    /** 主键 */
+    private String columnPrimaryKey;
 
     /** 描述 */
     private String columnDescribe;
@@ -117,6 +120,14 @@ public class TableColumnMateData implements Serializable {
         this.columnDefault = columnDefault;
     }
 
+    public String getColumnPrimaryKey() {
+        return columnPrimaryKey;
+    }
+
+    public void setColumnPrimaryKey(String columnPrimaryKey) {
+        this.columnPrimaryKey = columnPrimaryKey;
+    }
+
     public String getColumnDescribe() {
         return columnDescribe;
     }
@@ -137,6 +148,7 @@ public class TableColumnMateData implements Serializable {
                 .append("columnAutoGenerate", getColumnAutoGenerate())
                 .append("columnAutoIncrement", getColumnAutoIncrement())
                 .append("columnDefault", getColumnDefault())
+                .append("columnPrimaryKey", getColumnPrimaryKey())
                 .append("columnDescribe", getColumnDescribe())
                 .toString();
     }
