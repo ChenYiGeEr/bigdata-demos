@@ -8,10 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -312,6 +309,7 @@ public class DatasourceUtil {
         // 导出到文件
         try (FileOutputStream outputStream = new FileOutputStream(targetFileName)) {
             file.write(outputStream);
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -349,7 +347,13 @@ public class DatasourceUtil {
             space.createRun().setText(StringUtils.SPACE);
 
             XWPFParagraph tblTitle = file.createParagraph();
-            tblTitle.createRun().setText(tblIndex + " 表名称:" + table.getTableName() + (StringUtils.isNotBlank(table.getTableComment()) ? "（" + table.getTableComment() + "）" : ""));
+            // 由于H1是段落样式，我们可以直接设置段落的样式
+            tblTitle.setStyle("heading1");
+            XWPFRun tblTitleRun = tblTitle.createRun();
+            // 加粗、字体大小、标题
+            tblTitleRun.setBold(true);
+            tblTitleRun.setFontSize(15);
+            tblTitleRun.setText(tblIndex + " 表名称:" + table.getTableName() + (StringUtils.isNotBlank(table.getTableComment()) ? "（" + table.getTableComment() + "）" : ""));
             // 创建一个10列的表格
             docTable = file.createTable(1 + tableColumns.get(table).size(), 10);
             XWPFTableCell cell0 = docTable.getRow(0).getCell(0);
@@ -402,6 +406,7 @@ public class DatasourceUtil {
         // 导出到文件
         try (FileOutputStream outputStream = new FileOutputStream(targetFileName)) {
             file.write(outputStream);
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
