@@ -17,8 +17,8 @@
         <module>hive-demo</module>
         <module>kafka-demo</module>
         <module>kerberos-demo</module>
-        <module>kingbase-demo</module>
         <module>mapreduce-demo</module>
+        <module>metadata-demo</module>
         <module>notice-demo</module>
     <!-- <module>scala-demo</module> -->
         <module>spark-demo</module>

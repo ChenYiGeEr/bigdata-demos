@@ -10,14 +10,22 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>kingbase-demo</artifactId>
+    <artifactId>metadata-demo</artifactId>
 
     <properties>
+        <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
         <kingbase8.version>8.6.0</kingbase8.version>
-        <poi-ooxml.version>4.1.2</poi-ooxml.version>
+        <poi-ooxml.version>5.2.3</poi-ooxml.version>
     </properties>
 
     <dependencies>
+
+        <!-- mysql jdbc驱动jar -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
 
         <!-- 人大金仓jdbc驱动jar -->
         <dependency>

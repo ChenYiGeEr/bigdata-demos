@@ -1,4 +1,4 @@
-package com.lim.demos.kingbase.common.entity;
+package com.lim.demos.metadata.common.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -43,7 +43,7 @@ public class TableColumnMetaData implements Serializable {
     private String columnDefault;
 
     /** 主键 */
-    private String columnPrimaryKey;
+    private Boolean columnPrimaryKey;
 
     /** 描述 */
     private String columnDescribe;
@@ -120,11 +120,11 @@ public class TableColumnMetaData implements Serializable {
         this.columnDefault = columnDefault;
     }
 
-    public String getColumnPrimaryKey() {
+    public Boolean getColumnPrimaryKey() {
         return columnPrimaryKey;
     }
 
-    public void setColumnPrimaryKey(String columnPrimaryKey) {
+    public void setColumnPrimaryKey(Boolean columnPrimaryKey) {
         this.columnPrimaryKey = columnPrimaryKey;
     }
 
