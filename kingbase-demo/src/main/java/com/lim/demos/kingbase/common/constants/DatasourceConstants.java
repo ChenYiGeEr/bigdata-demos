@@ -76,7 +76,7 @@ public class DatasourceConstants {
                 "\twhere\n" +
                 "\ttbl.table_catalog = '%s'\n";
         if (StringUtils.isNotBlank(jdbcTableSchemas)) {
-            sql += String.format("\tand tbl.table_schema IN ('%s')", String.join("','", Arrays.asList(jdbcTableSchemas.split(ENG_COMMA))));
+            sql += String.format("\tand tbl.table_schema IN ('%s')\n", String.join("','", Arrays.asList(jdbcTableSchemas.split(ENG_COMMA))));
         }
         return String.format("%s and tbl." + COLUMN_TABLE_SCHEMA_NAME + "='%s' order by tbl.%s",
                 String.format(sql, columnName, databaseName),

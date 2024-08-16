@@ -371,18 +371,16 @@ public class DatasourceUtil {
         for (TableMetaData table : tableNames) {
             tblIndex += 1;
 
-            XWPFParagraph space = file.createParagraph();
-            space.createRun().setText(StringUtils.SPACE);
-
             XWPFParagraph tblTitle = file.createParagraph();
-            // 由于H1是段落样式，我们可以直接设置段落的样式
-            tblTitle.setStyle("heading1");
             XWPFRun tblTitleRun = tblTitle.createRun();
             // 加粗、字体大小、标题
+            tblTitleRun.setText(tblIndex + " 表名称:" + table.getTableName() + (StringUtils.isNotBlank(table.getTableComment()) ? "（" + table.getTableComment() + "）" : ""));
             tblTitleRun.setBold(true);
             tblTitleRun.setFontSize(15);
-            tblTitleRun.setText(tblIndex + " 表名称:" + table.getTableName() + (StringUtils.isNotBlank(table.getTableComment()) ? "（" + table.getTableComment() + "）" : ""));
-            tblTitle.addRun(tblTitleRun);
+            // 由于H1是段落样式，我们可以直接设置段落的样式且居左
+            tblTitle.setAlignment(ParagraphAlignment.LEFT);
+            tblTitle.setStyle("Heading1");
+
             // 创建一个10列的表格
             docTable = file.createTable(1 + tableColumns.get(table).size(), 10);
             XWPFTableCell cell0 = docTable.getRow(0).getCell(0);
@@ -430,6 +428,7 @@ public class DatasourceUtil {
                 docTable.getRow(i + 1).getCell(8).setText(StringUtils.isNotBlank(tableColumnMetaData.getColumnDefault()) ? tableColumnMetaData.getColumnDefault() : "[NULL]");
                 docTable.getRow(i + 1).getCell(9).setText(tableColumnMetaData.getColumnDescribe());
             }
+
         }
 
         // 导出到文件
@@ -473,9 +472,9 @@ public class DatasourceUtil {
                     tableColumns.put(tableMetaData, tableColumnMetaData);
                 }
                 // 4. 写出到excel中
-                exportCsv(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
+                // exportCsv(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
                 // 4. 写出到word中
-                // exportWord(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
+                exportWord(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
             }
         }
         // 5. 关闭连接
