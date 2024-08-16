@@ -3,10 +3,8 @@ package com.lim.demos.kingbase.common.util;
 import com.lim.demos.kingbase.common.entity.TableColumnMetaData;
 import com.lim.demos.kingbase.common.entity.TableMetaData;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
 
@@ -222,23 +220,53 @@ public class DatasourceUtil {
      */
     public static void exportCsv(String databaseName, String tableSchemaName, Map<TableMetaData, List<TableColumnMetaData>> tableColumns) {
         final String targetFileName = getFilePath(databaseName, tableSchemaName, "xlsx");
-        // 创建工作簿
+        // 1. 创建工作簿
         Workbook file = new XSSFWorkbook();
-        Sheet sheet = null;
-        int sheetIndex = 0;
-        Set<TableMetaData> tableNames = tableColumns.keySet();
+        // 1.1 创建CreationHelper，用于超链接的创建
+        CreationHelper creationHelper = file.getCreationHelper();
+        // 1.2 创建document类型的超链接
+        Hyperlink documentLink = null;
+        Set<TableMetaData> tableSet = tableColumns.keySet();
+        // 2. 创建目录sheet
+        Sheet sheet = file.createSheet("数据表目录");
+        // 创建行对象
+        Row firstRow = sheet.createRow(0);
+        // 创建单元格并设置值
+        Cell firstRowFirstCell = firstRow.createCell(0);
+        firstRowFirstCell.setCellValue("编号");
+        Cell firstRowSecondCell = firstRow.createCell(1);
+        firstRowSecondCell.setCellValue("表名");
+        Cell firstRowThirdCell = firstRow.createCell(2);
+        firstRowThirdCell.setCellValue("表描述");
+        int catalogueIndex = 0;
+        for (TableMetaData table : tableSet) {
+            catalogueIndex += 1;
+            Row row = sheet.createRow(catalogueIndex);
+            Cell id = row.createCell(0);
+            id.setCellValue(catalogueIndex);
+
+            Cell tblName = row.createCell(1);
+            tblName.setCellValue(table.getTableName());
+            documentLink = creationHelper.createHyperlink(HyperlinkType.DOCUMENT);
+            documentLink.setAddress("#'表" + catalogueIndex + "'!A1");
+            row.getCell(1).setHyperlink(documentLink);
+
+            Cell tblComment = row.createCell(2);
+            tblComment.setCellValue(table.getTableComment());
+        }
         // 遍历 tableNames
-        for (TableMetaData table : tableNames) {
+        int sheetIndex = 0;
+        for (TableMetaData table : tableSet) {
             sheetIndex += 1;
             // 创建工作表
-            sheet = file.createSheet("表" + sheetIndex + "_" + table.getTableName());
+            sheet = file.createSheet("表" + sheetIndex);
             // 创建行对象
-            Row firstRow = sheet.createRow(0);
+            firstRow = sheet.createRow(0);
             // 第一行固定为表名
             // 创建单元格并设置值
-            Cell firstRowFirstCell = firstRow.createCell(0);
+            firstRowFirstCell = firstRow.createCell(0);
             firstRowFirstCell.setCellValue(table.getTableName());
-            Cell firstRowSecondCell = firstRow.createCell(1);
+            firstRowSecondCell = firstRow.createCell(1);
             firstRowSecondCell.setCellValue(table.getTableComment());
             // 创建行对象
             Row secondRow = sheet.createRow(1);
@@ -354,6 +382,7 @@ public class DatasourceUtil {
             tblTitleRun.setBold(true);
             tblTitleRun.setFontSize(15);
             tblTitleRun.setText(tblIndex + " 表名称:" + table.getTableName() + (StringUtils.isNotBlank(table.getTableComment()) ? "（" + table.getTableComment() + "）" : ""));
+            tblTitle.addRun(tblTitleRun);
             // 创建一个10列的表格
             docTable = file.createTable(1 + tableColumns.get(table).size(), 10);
             XWPFTableCell cell0 = docTable.getRow(0).getCell(0);
@@ -444,9 +473,9 @@ public class DatasourceUtil {
                     tableColumns.put(tableMetaData, tableColumnMetaData);
                 }
                 // 4. 写出到excel中
-                // exportCsv(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
+                exportCsv(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
                 // 4. 写出到word中
-                exportWord(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
+                // exportWord(databaseNameMap.get(COLUMN_DATABASE_NAME), tableSchemaNameMap.get(COLUMN_TABLE_SCHEMA_NAME), tableColumns);
             }
         }
         // 5. 关闭连接
